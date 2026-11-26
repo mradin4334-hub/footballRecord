@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Football Performance Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div>
+      <h1>Football <span>Tracker</span></h1>
+      <p>سیستم بررسی و تحلیل عملکرد فوتبالی</p>
+    </div>
+    <div class="status">Performance System</div>
+  </header>
+
+  <main class="container">
+
+    <section class="panel">
+      <h2>اطلاعات جلسه تمرینی</h2>
+
+      <div class="info-grid">
+        <div>
+          <label for="trainingDate">تاریخ تمرین</label>
+          <input type="date" id="trainingDate">
+        </div>
+
+        <div>
+          <label for="position">پست بازی</label>
+          <select id="position">
+            <option value="وینگر">وینگر</option>
+            <option value="مدافع کناری">مدافع کناری</option>
+            <option value="مهاجم">مهاجم</option>
+            <option value="سایر">سایر</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="duration">مدت تمرین (دقیقه)</label>
+          <input type="number" id="duration" min="0" placeholder="مثلاً ۹۰">
+        </div>
+
+        <div>
+          <label for="intensity">شدت تمرین</label>
+          <select id="intensity">
+            <option value="سبک">سبک</option>
+            <option value="متوسط" selected>متوسط</option>
+            <option value="سنگین">سنگین</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="reset-info" id="resetInfo"></p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <h2>چک‌لیست عملکرد</h2>
+        <p>برای هر مورد، وضعیت مناسب را انتخاب کن.</p>
+      </div>
+
+      <div id="checklist"></div>
+
+      <div class="legend">
+        <span class="done-label">انجام شد</span>
+        <span class="fail-label">انجام نشد</span>
+        <span class="na-label">قابل ارزیابی نبود</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>ارزیابی شخصی</h2>
+      <p class="muted">به عملکرد خودت در هر بخش از ۱۰ امتیاز بده.</p>
+      <div id="ratings"></div>
+    </section>
+
+    <section class="panel">
+      <h2>یادداشت‌های تمرین</h2>
+
+      <label for="bestMoment">بهترین عملکرد امروز من</label>
+      <textarea id="bestMoment" placeholder="امروز در چه موقعیتی خوب عمل کردم؟"></textarea>
+
+      <label for="biggestMistake">مهم‌ترین اشتباه امروز</label>
+      <textarea id="biggestMistake" placeholder="چه اشتباهی داشتم؟"></textarea>
+
+      <label for="betterDecision">کجا می‌توانستم تصمیم بهتری بگیرم؟</label>
+      <textarea id="betterDecision" placeholder="چه تصمیمی می‌توانستم بهتر بگیرم؟"></textarea>
+
+      <label for="lesson">مهم‌ترین چیزی که یاد گرفتم</label>
+      <textarea id="lesson" placeholder="از تمرین امروز چه چیزی یاد گرفتم؟"></textarea>
+
+      <label for="nextGoal">هدف جلسه بعد</label>
+      <textarea id="nextGoal" placeholder="در تمرین بعدی روی چه چیزی تمرکز کنم؟"></textarea>
+    </section>
+
+    <div class="actions">
+      <button class="primary-btn" id="analyzeBtn">تحلیل عملکرد</button>
+      <button class="secondary-btn" id="saveBtn" disabled>ذخیره گزارش</button>
+    </div>
+
+    <section class="panel report hidden" id="report">
+      <h2>گزارش عملکرد</h2>
+
+      <div class="score-card">
+        <span>امتیاز کلی جلسه</span>
+        <strong id="finalScore">0</strong>
+        <small>از ۱۰</small>
+      </div>
+
+      <div class="report-grid">
+        <div>
+          <h3 class="good-title">نقاط قوت</h3>
+          <ul id="strengths"></ul>
+        </div>
+
+        <div>
+          <h3 class="weak-title">نقاط قابل بهبود</h3>
+          <ul id="weaknesses"></ul>
+        </div>
+      </div>
+
+      <div>
+        <h3>پیشنهادهای تمرینی</h3>
+        <ul id="advice"></ul>
+      </div>
+
+      <div class="analysis-box">
+        <h3>تحلیل کلی</h3>
+        <p id="personalAnalysis"></p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <h2>نمودار عملکرد</h2>
+          <p class="muted">روند امتیاز کلی در ۳۰ جلسه اخیر</p>
+        </div>
+        <span class="chart-count" id="chartCount">۰ جلسه</span>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="performanceChart"></canvas>
+      </div>
+
+      <p class="muted chart-note" id="chartNote">
+        بعد از ذخیره اولین گزارش، نمودار عملکردت اینجا نمایش داده می‌شود.
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <h2>تاریخچه تمرین‌ها</h2>
+        <button class="danger-btn" id="clearHistoryBtn">حذف تاریخچه</button>
+      </div>
+
+      <div id="history">
+        <p class="muted">هنوز گزارشی ذخیره نشده است.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>FOOTBALL PERFORMANCE TRACKER</p>
+    <span>Track. Analyze. Improve.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
